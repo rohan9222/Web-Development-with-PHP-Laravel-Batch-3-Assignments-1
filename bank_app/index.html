@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank App</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding-top: 25px;
+            background-color: #363958;
+        }
+
+        .submit-area {
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 10px;
+            box-shadow: 5px 5px gray;
+            color: white;
+            background-color: royalblue;
+        }
+
+        #account-area {
+            margin-top: 5%;
+        }
+
+        .deposit {
+            background-color: slateblue;
+        }
+
+        .withdraw {
+            background-color: lightsalmon;
+        }
+
+        .balance {
+            background-color: tomato;
+        }
+
+        .status {
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="account-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="deposit status">
+                        <h5>Last Deposit</h5>
+                        <h2>TK <span id="current-deposit">00</span></h2>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-3">
+                    <div class="withdraw status">
+                        <h5>Last Withdraw</h5>
+                        <h2>TK <span id="current-withdraw">00</span></h2>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-3">
+                    <div class="balance status" id="last-info">
+                        <h5>Last Balance</h5>
+                        <h4>Account Number :<span>-------</span></h4>
+                        <h4>Owner Name :<span>-------</span></h4>
+                        <h2>TK <span>00</span></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row submit-area">
+                <form class="row">
+                    <div class="col-md">
+                        <label for="account-number" class="form-label">Account Number</label>
+                        <select id="account-number" class="form-select">
+                        </select>
+                    </div>
+                    <div class="col-md">
+                        <label for="deposit-withdraw" class="form-label">Deposit/Withdraw </label>
+                        <select id="deposit-withdraw" class="form-select">
+                            <option value="">Select One</option>
+                            <option value="Deposit">Deposit</option>
+                            <option value="Withdraw">Withdraw</option>
+                        </select>
+                    </div>
+                    <div class="col-md">
+                        <label for="input-amount" class="form-label">Amount</label>
+                        <input type="number" class="form-control" id="input-amount">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="submit" class="form-label">.</label>
+                        <div class="form-control btn btn-info" id="submit" onclick="submitFunction()">Submit</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="bootstrap.min.js"></script>
+<script>
+    class BankAccount {
+        constructor(accountNumber, ownerName, balance) {
+            this.accountNumber = accountNumber;
+            this.ownerName = ownerName;
+            this.balance = balance;
+        }
+        
+        deposit(amount) {
+            this.balance += amount;
+            console.log(`Amount TK ${amount} deposited into account ${this.accountNumber}.`);
+        }
+
+        withdraw(amount) {
+            if (amount <= this.balance) {
+            this.balance -= amount;
+            console.log(`Amount TK ${amount} withdrawn from account ${this.accountNumber}.`);
+            } else {
+            console.log(`Insufficient balance in account ${this.accountNumber}.`);
+            alert(`Insufficient balance in account ${this.accountNumber}. Also show a message in the console.`);
+            }
+        }
+
+        getBalance() {
+            return `Account ${this.accountNumber} balance: ${this.balance}`;
+        }
+
+        displayAccountInfo() {
+            return `<h5>Last Balance</h5><h4>Account Number :<span> ${this.accountNumber} </span></h4><h4>Owner Name :<span>${this.accountHolderName}</span></h4><h2>TK <span>${this.balance}</span></h2>`;
+        }
+    }
+
+// Create multiple instances of the BankAccount class
+const account1 = new BankAccount('1001', 'Jahangir Alam', 2000);
+const account2 = new BankAccount('1002', 'Rohan', 3000);
+document.getElementById("account-number").innerHTML ="<option>Select One</option><option value="+account1.accountNumber+">"+account1.accountNumber+"</option><option value="+account2.accountNumber+">"+account2.accountNumber+"</option>";
+
+function submitFunction(){
+    var inputAccountNumber = document.getElementById('account-number').value;
+    var depositWithdraw = document.getElementById('deposit-withdraw').value;
+    var inputAmount = document.getElementById('input-amount').value;
+    if(inputAccountNumber == "" || depositWithdraw == "" || inputAmount == ""){
+        alert("All Field Required");
+    }
+    if(inputAccountNumber == '1001' && depositWithdraw == 'Deposit' && inputAmount != ""){
+        account1.deposit(parseInt(inputAmount)); 
+        document.getElementById("current-deposit").innerHTML = inputAmount;inputAmount;document.getElementById("current-withdraw").innerHTML = "00";
+        document.getElementById("last-info").innerHTML = account1.displayAccountInfo();
+    }
+    if(inputAccountNumber == '1001' && depositWithdraw == 'Withdraw' && inputAmount != ""){
+        account1.withdraw(parseInt(inputAmount));  document.getElementById("current-withdraw").innerHTML = inputAmount;document.getElementById("current-deposit").innerHTML = "00";
+        document.getElementById("last-info").innerHTML = account1.displayAccountInfo();
+    }
+    if(inputAccountNumber == '1002' && depositWithdraw == 'Deposit' && inputAmount != ""){
+        account2.deposit(parseInt(inputAmount));
+        document.getElementById("current-deposit").innerHTML = inputAmount;document.getElementById("current-withdraw").innerHTML = "00";
+        document.getElementById("last-info").innerHTML = account2.displayAccountInfo();
+    }
+    if(inputAccountNumber == '1002' && depositWithdraw == 'Withdraw' && inputAmount != ""){
+        account2.withdraw(parseInt(inputAmount));  document.getElementById("current-withdraw").innerHTML = inputAmount;document.getElementById("current-deposit").innerHTML = "00";
+        document.getElementById("last-info").innerHTML = account2.displayAccountInfo();
+    }
+    // console.log(depositWithdraw);
+}
+
+
+</script>
+</html>

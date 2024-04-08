@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body class="bg-info bg-opacity-6 fw-medium" >
+    <div class="container" style="height: 250px;">
+        <div class="p-3 bg-light bg-opacity-6 border border-2 rounded mt-5 h-100 w-100 row p-3">
+            <form class="row g-1 ">
+              <div class="p-3 h-25 text-secondary-emphasis bg-secondary border border-0  border-bottom border-info rounded-1 bg-opacity-10 text-center">
+                CALCULATOR
+              </div>
+                <div class="col-md">
+                  <label for="first-input" class="form-label">First Value</label>
+                  <input type="number" class="form-control" id="first-input">
+                </div>
+                <div class="col-md">
+                  <label for="operator-input" class="form-label">Select Operator</label>
+                  <select id="operator-input" class="form-select">
+                    <option value="+">Addition (+)</option>
+                    <option value="-">Subtraction (-)</option>
+                    <option value="*">Multiplication (*)</option>
+                    <option value="/">Division (/)</option>
+                  </select>
+                </div>
+                <div class="col-md">
+                  <label for="second-input" class="form-label">Second Value</label>
+                  <input type="number" class="form-control" id="second-input">
+                </div>
+                <div class="col-md-2">
+                  <label for="calculate" class="form-label">.</label>
+                  <div class="form-control btn btn-info" id="calculate" onclick="CalculateFunction()">Calculate</div>
+                </div>
+                <div class="p-3 h-25 text-success-emphasis bg-success-subtle border border-success-subtle rounded-3 "><span>RESULT : </span><span id="output-data"></span></div>
+                  
+              </form>
+        </div>
+    </div>    
+</body>
+<script src="bootstrap.min.js"></script>
+<script>
+  function CalculateFunction(){
+    var FInput = document.getElementById('first-input').value;
+    var OInput = document.getElementById('operator-input').value;
+    var SInput = document.getElementById('second-input').value;
+    // document.getElementById("output-data").innerHTML = SInput;
+    // console.log(typeof(FInput));
+    if(!FInput && !FInput && !SInput){
+      document.getElementById("output-data").innerHTML =  "Must Be Required All Field";
+    }else{
+      if (OInput == '+'){
+        document.getElementById("output-data").innerHTML =  parseInt(FInput) + parseInt(SInput);
+      }
+      if (OInput == '-'){
+        document.getElementById("output-data").innerHTML = parseInt(FInput) + parseInt(SInput);
+      }
+      if (OInput == '*'){
+        document.getElementById("output-data").innerHTML = parseInt(FInput) + parseInt(SInput);
+      }
+      if (OInput == '/'){
+        document.getElementById("output-data").innerHTML = parseInt(FInput) + parseInt(SInput);
+      }
+    }
+  }
+</script>
+</html>
